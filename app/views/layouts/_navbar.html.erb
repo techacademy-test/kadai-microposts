@@ -11,10 +11,51 @@
         <a class="navbar-brand" href="/">Microposts</a>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        
+        <!--ナビバーの設置-->
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Signup</a></li>
-          <li><a href="#">Login</a></li>
+          
+          <!--ログインしている場合-->
+          <% if logged_in? %>
+          
+            <!--ログインしていたらリンクが変わる-->
+            <li><%= link_to "Users", users_path %></li>
+            
+            <!--ドロップダウンメニューにする-->
+            <li class="dropdown">
+              
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <%= current_user.name %><span class="caret"></span>
+              </a>
+              
+              <!--ドロップダウン中のリスト作成-->
+              <ul class="dropdown-menu">
+                
+                <!--user#showへとばす-->
+                <li><%= link_to "My profile", user_path(current_user) %></li>
+                <li role="separator" class="divider"></li>
+                
+                <!--sessions#destroyへとばす-->
+                <li><%= link_to "Logout", logout_path, method: :delete%></li>
+              </ul>
+              <!--ドロップダウン中のリスト終了-->
+              
+            </li>
+            <!--ドロップダウンメニュー終了-->
+          
+          <!--ログインしていない場合-->
+          <% else %>
+            
+            <!--users#newにとばす-->
+            <li><%= link_to "Signup", signup_path %></li>
+            
+            <!--sessions#newにとばす-->
+            <li><%= link_to "Login", login_path %></li>
+            
+          <% end %>
+            
         </ul>
+        <!--ナビバー終了-->
       </div>
     </div>
   </nav>
