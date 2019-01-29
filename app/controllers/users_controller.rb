@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     
     if @user.save
       flash[:success] = "ユーザを登録しました"
-      redirecto_to @user
+      redirect_to @user
     else
       flash.now[:danger] = "ユーザの登録に失敗しました"
       render :new
@@ -40,9 +40,14 @@ class UsersController < ApplicationController
     counts(@user)
   end
   
+  def likes
+    @user = User.find(params[:id])
+    @microposts = @user.likes.page(params[:page])
+  end
+  
   private
   
     def user_params
-      params.require(:user).permit(:name,:email,:password_cofirmation)
+      params.require(:user).permit(:name,:email,:password,:password_cofirmation)
     end
 end
